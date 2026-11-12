@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PayShield AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0A0D12;--panel:#12161D;--line:#262B33;--soft:#1B2029;--text:#E7E4DC;--mut:#8B9099;--faint:#565C66;--brass:#C6A15B;--brassd:#8A7245;--red:#B0453D;--green:#4B7A63;--on:#0A0D12;--navbg:rgba(10,13,18,.86);--serif:'Fraunces',serif;--sans:'IBM Plex Sans',sans-serif;--mono:'IBM Plex Mono',monospace;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#F4F2EC;--panel:#FFFFFF;--line:#D9D5CA;--soft:#E6E2D8;--text:#1A1C20;--mut:#5E626B;--faint:#8A8E97;--brass:#8A6A2A;--brassd:#B79A5C;--red:#A33A32;--green:#2F6A4F;--on:#FFFFFF;--navbg:rgba(244,242,236,.88);color-scheme:light}}
+:root[data-theme="light"]{--bg:#F4F2EC;--panel:#FFFFFF;--line:#D9D5CA;--soft:#E6E2D8;--text:#1A1C20;--mut:#5E626B;--faint:#8A8E97;--brass:#8A6A2A;--brassd:#B79A5C;--red:#A33A32;--green:#2F6A4F;--on:#FFFFFF;--navbg:rgba(244,242,236,.88);color-scheme:light}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(72px + env(safe-area-inset-top,0px))}
+body{background:var(--bg);color:var(--text);font:300 15px/1.55 var(--sans);overflow-x:hidden}
+::selection{background:var(--brassd);color:var(--on)}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--brass);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+.wrap{max-width:1180px;margin:0 auto;padding:0 40px}
+@media (max-width:720px){.wrap{padding:0 22px}}
+nav{position:sticky;top:0;z-index:50;background:var(--navbg);backdrop-filter:blur(10px);border-bottom:1px solid var(--soft)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:72px}
+.wordmark{font-family:var(--serif);font-size:22px;font-weight:500}.wordmark span{color:var(--brass)}
+.navlinks{display:flex;gap:36px;font-size:14px;color:var(--mut)}
+.navlinks a{transition:color .25s}.navlinks a:hover{color:var(--text)}
+@media (max-width:860px){.navlinks{display:none}}
+.nav-live{display:flex;align-items:center;gap:7px;font:400 12px var(--mono);color:var(--green)}
+.dot{width:6px;height:6px;background:var(--green);animation:pulse 2s ease infinite}
+.dot.busy{background:var(--brass)}
+@keyframes pulse{50%{opacity:.3}}
+@keyframes riseUp{to{transform:translateY(0)}}
+@keyframes riseIn{to{opacity:1}}
+@keyframes settle{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+header.hero{padding:120px 0 90px;border-bottom:1px solid var(--soft)}
+.hero-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:70px;align-items:end}
+@media (max-width:880px){.hero-grid{grid-template-columns:1fr;gap:44px}header.hero{padding:80px 0 60px}}
+.eyebrow-line{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--mut);margin-bottom:28px;opacity:0;animation:riseIn .7s ease .1s forwards}
+.eyebrow-line i{width:22px;height:1px;background:var(--brassd)}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(38px,5.4vw,66px);line-height:1.06;letter-spacing:-.5px}
+h1 .line{display:block;overflow:hidden}
+h1 .line span{display:inline-block;transform:translateY(110%);animation:riseUp .85s cubic-bezier(.2,.8,.2,1) forwards}
+h1 .line:nth-child(1) span{animation-delay:.15s}h1 .line:nth-child(2) span{animation-delay:.28s}h1 .line:nth-child(3) span{animation-delay:.41s}
+.lead{margin-top:26px;max-width:52ch;font-size:17px;color:var(--mut);opacity:0;animation:riseIn .8s ease .62s forwards}
+.hero-actions{margin-top:36px;display:flex;gap:14px;flex-wrap:wrap;opacity:0;animation:riseIn .8s ease .75s forwards}
+.btn{padding:14px 26px;font-size:14px;border:1px solid var(--line);background:none;color:var(--text);cursor:pointer;transition:background .25s,color .25s,border-color .25s}
+.btn:hover{border-color:var(--mut)}
+.btn.pri{background:var(--brass);border-color:var(--brass);color:var(--on)}
+.btn.pri:hover{background:transparent;color:var(--brass)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.hero-panel{border:1px solid var(--line);background:var(--panel);padding:26px;opacity:0;animation:riseIn .9s ease .5s forwards}
+.hp-title{font-size:12px;color:var(--faint);letter-spacing:.5px;margin-bottom:12px}
+.hp-row{padding:14px 0;border-top:1px solid var(--soft);font-size:14px}
+.hp-row:first-of-type{border-top:0}
+.hp-row b{display:block;font-weight:500}.hp-row span{color:var(--mut);font-size:13px}
+.hp-row em{font:400 12px var(--mono);font-style:normal;float:right;margin-top:3px}
+.ok{color:var(--green)}.bad{color:var(--red)}.warn{color:var(--brass)}
+section.sec{padding:96px 0;border-bottom:1px solid var(--soft)}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:44px;gap:24px;flex-wrap:wrap}
+.section-head h2{font-family:var(--serif);font-weight:400;font-size:clamp(26px,3.2vw,38px);letter-spacing:-.3px}
+.section-head p{color:var(--mut);font-size:15px;max-width:44ch}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);background:var(--panel);margin-bottom:22px}
+.m{padding:20px 22px;border-right:1px solid var(--line)}.m:last-child{border:0}
+.m small{display:block;font-size:12px;color:var(--faint)}
+.m b{display:block;margin-top:4px;font:400 26px var(--mono);letter-spacing:-.5px}
+@media (max-width:800px){.metrics{grid-template-columns:1fr 1fr}.m:nth-child(2){border-right:0}.m:nth-child(-n+2){border-bottom:1px solid var(--line)}}
+.paths{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+@media (max-width:860px){.paths{grid-template-columns:1fr}}
+.path{border:1px solid var(--line);background:var(--panel);padding:28px;display:flex;flex-direction:column;transition:border-color .25s}
+.path.ai{border-color:var(--brassd)}
+.ph{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:6px}
+.ph h3{font-family:var(--serif);font-weight:400;font-size:21px}
+.ph .tag{font:400 11px var(--mono);color:var(--faint)}
+.sub{color:var(--mut);font-size:13px;margin-bottom:20px}
+.item{display:flex;justify-content:space-between;align-items:baseline;padding:14px 0;border-block:1px solid var(--soft)}
+.item small{display:block;color:var(--faint);font-size:12px}
+.item .px{font:400 15px var(--mono)}
+.state{font:400 12px var(--mono);color:var(--mut);padding:12px 0}
+.cells{display:flex;gap:4px;margin:4px 0 12px}
+.cells i{flex:1;height:6px;background:var(--soft);transition:background .15s}
+.cells i.on{background:var(--brass)}
+.out{border:1px solid var(--soft);padding:16px 18px;min-height:132px;color:var(--mut);font-size:14px;margin-bottom:18px;flex:1}
+.out.show{animation:settle .26s ease-out}
+.out strong{display:block;font:500 15px var(--sans);margin-bottom:4px}
+.out.ok{border-color:var(--green)}.out.ok strong{color:var(--green)}
+.out.bad{border-color:var(--red)}.out.bad strong{color:var(--red)}
+.out.warn{border-color:var(--brassd)}.out.warn strong{color:var(--brass)}
+.sig{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.sig span{font:400 11px var(--mono);padding:2px 8px;border:1px solid var(--line);color:var(--mut)}
+.conf{height:2px;background:var(--soft);margin-top:14px}.conf i{display:block;height:100%;width:0;background:var(--brass);transition:width .26s ease-out}
+.acts{display:flex;gap:10px;flex-wrap:wrap}
+.acts .btn{padding:12px 18px;font-size:13px}
+.order{display:none;margin-top:18px;border-top:1px solid var(--soft);padding-top:18px}
+.order.show{display:block;animation:settle .26s ease-out}
+.pp{width:100%;padding:13px;border:0;background:#FFC439;color:#111;font:600 14px var(--sans);cursor:pointer;transition:filter .2s}
+.pp:hover{filter:brightness(.94)}.pp:disabled{opacity:.6;cursor:wait}
+.pp i{font-style:italic;font-weight:800;color:#003087}.pp i b{color:#009CDE}
+.oid{margin-top:12px;font:400 12px var(--mono);color:var(--mut)}
+.act-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:60px}
+@media (max-width:900px){.act-grid{grid-template-columns:1fr;gap:40px}}
+.logh{display:flex;justify-content:space-between;font-size:12px;color:var(--faint);padding-bottom:12px;border-bottom:1px solid var(--line)}
+.row{display:grid;grid-template-columns:76px 110px 1fr;gap:16px;padding:16px 0;border-bottom:1px solid var(--soft);font-size:13.5px;animation:settle .26s ease-out}
+.row .t{font:400 12px var(--mono);color:var(--faint)}
+.row .v{font:500 12px var(--mono)}
+.row p{color:var(--mut)}
+pre{font:400 11.5px/1.5 var(--mono);color:var(--faint);margin-top:8px;overflow-x:auto;white-space:pre-wrap;word-break:break-all}
+.empty{padding:22px 0;color:var(--mut);font-size:14px}
+@media (max-width:600px){.row{grid-template-columns:64px 1fr}.row>div{grid-column:1/-1}}
+.legend-item{display:flex;gap:12px;margin-bottom:22px}
+.sw{width:10px;height:10px;margin-top:6px;background:var(--brass);flex-shrink:0}
+.legend-item h4{font-size:14px;font-weight:500;margin-bottom:3px}.legend-item p{font-size:13px;color:var(--mut)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);background:var(--panel)}
+@media (max-width:800px){.steps{grid-template-columns:1fr}}
+.step{padding:28px;border-right:1px solid var(--line)}.step:last-child{border:0}
+@media (max-width:800px){.step{border-right:0;border-bottom:1px solid var(--line)}}
+.step .n{font:400 12px var(--mono);color:var(--brass)}
+.step h4{font-family:var(--serif);font-weight:400;font-size:20px;margin:10px 0 8px}
+.step p{font-size:14px;color:var(--mut)}
+footer{padding:36px 0 48px;color:var(--faint);font-size:13px}
+footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<nav><div class="wrap">
+  <a class="wordmark" href="#top">PayShield<span>.</span>AI</a>
+  <div class="navlinks"><a href="#decision-desk">Decision desk</a><a href="#activity">Activity</a><a href="#principles">How it works</a></div>
+  <div class="nav-live"><span class="dot" id="dot"></span><span id="status">Desk ready</span></div>
+</div></nav>
+
+<header class="hero" id="top"><div class="wrap hero-grid">
+  <div>
+    <div class="eyebrow-line"><i></i>Payment decisions for PayPal checkout</div>
+    <h1><span class="line"><span>Protect the checkout</span></span><span class="line"><span>without losing</span></span><span class="line"><span>the customer.</span></span></h1>
+    <p class="lead">PayShield AI tells a customer who is trying again from a bot that is trying everything, then gives each request the right amount of friction.</p>
+    <div class="hero-actions"><a class="btn pri" href="#decision-desk">Run a simulation</a><a class="btn" href="#principles">See how it works</a></div>
+  </div>
+  <aside class="hero-panel">
+    <div class="hp-title">What each route does with the same $199 order</div>
+    <div class="hp-row"><em class="bad">Legacy: declined</em><b>Customer retries a third time</b><span>Same device, same cart</span></div>
+    <div class="hp-row"><em class="ok">PayShield: rescued</em><b>Customer retries a third time</b><span>Offered PayPal Express</span></div>
+    <div class="hp-row"><em class="warn">PayShield: blocked</em><b>Ten requests in one second</b><span>Stopped before payment</span></div>
+  </aside>
+</div></header>
+
+<section class="sec" id="decision-desk"><div class="wrap">
+  <div class="section-head"><h2>Decision desk</h2><p>Send the same traffic to both checkouts and compare what each one does with it.</p></div>
+  <div class="metrics" aria-label="Session totals">
+    <div class="m"><small>Revenue rescued</small><b class="ok" id="m-rev">$0.00</b></div>
+    <div class="m"><small>False declines prevented</small><b id="m-fp">0</b></div>
+    <div class="m"><small>Bot attacks blocked</small><b class="warn" id="m-bot">0</b></div>
+    <div class="m"><small>Revenue lost on legacy</small><b class="bad" id="m-lost">$0.00</b></div>
+  </div>
+  <div class="paths">
+    <article class="path">
+      <div class="ph"><h3>Legacy checkout</h3><span class="tag">no AI</span></div>
+      <p class="sub">Blocks any customer after the second failed attempt.</p>
+      <div class="item"><div>Pro Mechanical Keyboard<small>1 × keyboard</small></div><span class="px">$199.00</span></div>
+      <div class="state">Retry attempt 3 of 3</div>
+      <div class="out" id="out-l">Waiting for a retry. This checkout only counts attempts.</div>
+      <div class="acts"><button class="btn" id="l-human">Simulate buyer retry (3rd attempt)</button></div>
+    </article>
+    <article class="path ai">
+      <div class="ph"><h3>PayShield AI</h3><span class="tag" id="engine">classifier idle</span></div>
+      <p class="sub">Reads cart, timing, device and request speed before it decides.</p>
+      <div class="item"><div>Pro Mechanical Keyboard<small>1 × keyboard</small></div><span class="px">$199.00</span></div>
+      <div class="state">Telemetry-aware checkout</div>
+      <div class="cells" id="cells" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="out" id="out-a">Waiting for a session. The classifier will explain every decision.</div>
+      <div class="acts"><button class="btn pri" id="a-human">Simulate buyer retry (3rd attempt)</button><button class="btn" id="a-bot">Simulate bot attack (10 rapid requests)</button></div>
+      <div class="order" id="order"><button class="pp" id="b-pp" aria-label="Pay with PayPal"><i>Pay<b>Pal</b></i> Express checkout</button><div class="oid" id="oid"></div></div>
+    </article>
+  </div>
+</div></section>
+
+<section class="sec" id="activity"><div class="wrap">
+  <div class="section-head"><h2>Activity</h2><p>Every routing decision, with the telemetry behind it.</p></div>
+  <div class="act-grid">
+    <div><div class="logh"><span>Decision log</span><span id="count">0 events</span></div><div id="log"><div class="empty">No events yet. Run a simulation from the decision desk.</div></div></div>
+    <div>
+      <div class="hp-title" style="margin-bottom:18px">Signals the classifier reads</div>
+      <div class="legend-item"><span class="sw"></span><div><h4>Cart consistency</h4><p>Same item, same total, same session.</p></div></div>
+      <div class="legend-item"><span class="sw"></span><div><h4>Human pacing</h4><p>Normal time between attempts and varied keystrokes.</p></div></div>
+      <div class="legend-item"><span class="sw"></span><div><h4>Request velocity</h4><p>Bursts of near-identical requests point to automation.</p></div></div>
+      <div class="legend-item"><span class="sw"></span><div><h4>Device history</h4><p>Whether the device and network have paid here before.</p></div></div>
+    </div>
+  </div>
+</div></section>
+
+<section class="sec" id="principles"><div class="wrap">
+  <div class="section-head"><h2>How it works</h2><p>One decision per session, made before the payment is attempted.</p></div>
+  <div class="steps">
+    <div class="step"><span class="n">1</span><h4>Telemetry arrives</h4><p>The checkout sends attempt count, timing, device, cart changes and request speed.</p></div>
+    <div class="step"><span class="n">2</span><h4>The classifier decides</h4><p>It returns rescue, block or allow, a confidence score and one sentence of reasoning.</p></div>
+    <div class="step"><span class="n">3</span><h4>The route follows</h4><p>Rescued customers get a PayPal order. Bots are stopped. Normal buyers pass through.</p></div>
+  </div>
+</div></section>
+
+<footer><div class="wrap"><span>PayShield AI</span><span>PayPal orders are simulated in this hosted demo. Live Sandbox orders need your keys on a server.</span></div></footer>
+
+<script>
+const $=id=>document.getElementById(id);
+const rnd=(a,b)=>+(a+Math.random()*(b-a)).toFixed(2);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const S={rev:0,fp:0,bot:0,lost:0,n:0};
+function tween(el,to,fmt){const from=parseFloat(el.dataset.v||0);el.dataset.v=to;const t0=performance.now();(function f(t){const p=Math.min(1,(t-t0)/260),e=1-Math.pow(1-p,3);el.textContent=fmt(from+(to-from)*e);if(p<1)requestAnimationFrame(f)})(t0)}
+const usd=v=>'$'+v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+function paint(){tween($('m-rev'),S.rev,usd);tween($('m-fp'),S.fp,v=>Math.round(v));tween($('m-bot'),S.bot,v=>Math.round(v));tween($('m-lost'),S.lost,usd);$('count').textContent=S.n+(S.n===1?' event':' events')}
+
+const profile={
+  human:()=>({session:'buyer',attempts:3,requests_in_window:3,window_seconds:rnd(60,140),cart_changes:0,dwell_seconds:rnd(30,70),same_device:true,known_network:true,keystroke_variance:rnd(.3,.5),last_decline:'card_number_typo'}),
+  bot:()=>({session:'unknown',attempts:10,requests_in_window:10,window_seconds:rnd(.6,1.4),cart_changes:Math.ceil(rnd(4,9)),dwell_seconds:rnd(.1,.5),same_device:false,known_network:false,keystroke_variance:rnd(0,.02),last_decline:'rotating_cards'})
+};
+function heuristic(t){
+  const b=(t.window_seconds<3&&t.requests_in_window>5?1:0)+(t.cart_changes>3?1:0)+(!t.same_device?1:0)+(t.keystroke_variance<.1?1:0);
+  if(b>=3)return{verdict:'block',confidence:.97,reason:'Ten requests in about a second, a changing cart and an unknown device. This is automated traffic.',signals:['request_velocity','cart_churn','new_device']};
+  if(t.attempts>=3)return{verdict:'rescue',confidence:.93,reason:'Same device and cart, human pacing. The earlier decline looks like a card typo, so offer PayPal Express.',signals:['same_device','stable_cart','human_pacing']};
+  return{verdict:'allow',confidence:.97,reason:'Normal first attempt with no risk signals.',signals:['clean_session']};
+}
+async function classify(t){
+  let s=null;try{s=window.claude?await window.claude.use('sample'):null}catch(e){}
+  if(!s)return{...heuristic(t),engine:'local rules'};
+  const p='You classify payment sessions for a $199 checkout. Decide "rescue" (genuine customer retrying after a decline: offer PayPal Express), "block" (automated abuse) or "allow" (normal first purchase). Reply with ONLY JSON: {"verdict":"rescue|block|allow","confidence":0-1,"reason":"one plain sentence","signals":["up to 3 short snake_case tags"]}\nTelemetry: '+JSON.stringify(t);
+  try{const r=await s.json(p,{modelTier:'quick'});if(!r||!['rescue','block','allow'].includes(r.verdict))throw 0;r.confidence=Math.min(1,Math.max(0,+r.confidence||.9));r.signals=(r.signals||[]).slice(0,3);return{...r,engine:'Claude'}}
+  catch(e){return{...heuristic(t),engine:'local rules'}}
+}
+function show(el,cls,html){el.className='out show '+cls;el.innerHTML=html}
+const lock=v=>document.querySelectorAll('.acts .btn').forEach(b=>b.disabled=v);
+const busy=(v,m)=>{$('dot').classList.toggle('busy',v);$('status').textContent=m};
+
+$('l-human').onclick=()=>{
+  S.lost+=199;S.n++;paint();
+  show($('out-l'),'bad','<strong>Declined</strong>Retry limit reached. A real customer was turned away and $199.00 was lost.');
+  addLog({verdict:'decline',confidence:1,reason:'Legacy rule: more than two attempts. Same device and cart were ignored.',engine:'legacy'},profile.human(),'legacy');
+};
+
+async function runAI(kind){
+  lock(true);busy(true,'Classifying…');$('order').classList.remove('show');$('oid').textContent='';
+  const cells=[...document.querySelectorAll('#cells i')];cells.forEach(c=>c.classList.remove('on'));
+  const t=profile[kind]();
+  $('out-a').className='out';$('out-a').textContent='Reading telemetry…';
+  const n=kind==='bot'?10:3;
+  for(let i=0;i<n;i++){cells[i].classList.add('on');await new Promise(r=>setTimeout(r,kind==='bot'?45:160))}
+  const d=await classify(t);$('engine').textContent=d.engine;
+  const m={rescue:['ok','Rescued: offering PayPal Express'],block:['bad','Blocked at the edge'],allow:['ok','Approved']}[d.verdict];
+  show($('out-a'),m[0],`<strong>${m[1]}</strong>${esc(d.reason)}<div class="sig">${d.signals.map(x=>`<span>${esc(x)}</span>`).join('')}</div><div class="conf"><i id="cf"></i></div>`);
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{$('cf').style.width=Math.round(d.confidence*100)+'%'}));
+  if(d.verdict==='rescue'){S.fp++;const pb=$('b-pp');pb.disabled=false;pb.innerHTML='<i>Pay<b>Pal</b></i> Express checkout';$('order').classList.add('show')}
+  if(d.verdict==='block')S.bot++;
+  S.n++;paint();addLog(d,t,d.verdict);busy(false,'Desk ready');lock(false);
+}
+$('a-human').onclick=()=>runAI('human');$('a-bot').onclick=()=>runAI('bot');
+
+function addLog(d,t,cls){
+  const l=$('log');if(l.querySelector('.empty'))l.innerHTML='';
+  const r=document.createElement('div');r.className='row';
+  const c={rescue:'ok',block:'warn',decline:'bad',allow:''}[cls]||'';
+  r.innerHTML=`<span class="t">${new Date().toLocaleTimeString([],{hour12:false})}</span><span class="v ${c}">${d.verdict} ${Math.round(d.confidence*100)}%</span><div><p>${esc(d.reason)}</p><pre>${esc(JSON.stringify(t))}</pre></div>`;
+  l.prepend(r);while(l.children.length>6)l.lastChild.remove();
+}
+$('b-pp').onclick=async()=>{
+  const b=$('b-pp');b.disabled=true;await new Promise(r=>setTimeout(r,600));
+  const id=Array.from({length:17},()=>'ABCDEFGHJKLMNPQRSTUVWXYZ0123456789'[Math.floor(Math.random()*34)]).join('');
+  S.rev+=199;paint();$('oid').textContent='Order '+id+' created for $199.00 USD (simulated)';
+  b.textContent='Order created';
+};
+</script>
+</body>
+</html>
