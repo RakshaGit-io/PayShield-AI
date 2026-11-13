@@ -6,7 +6,7 @@ Every genuine customer matters. A legitimate payment retry shouldn't automatical
 The Problem
    Imagine standing at a coffee counter, trying to pay for your coffee. Your payment fails, so you try again. But instead of completing your purchase, the system flags your repeated attempts as suspicious activity.
 That's a frustrating experience for customers — and lost revenue for merchants.
-  Traditional fraud prevention can sometimes struggle to distinguish genuine customer behaviour from automated attacks.
+  Traditional fraud prevention can sometimes struggle to distinguish genuine customer behaviour from automated attacks.  Now imagine the same scenario where a perfectly made sales is delayed because a few retries locked your account.
 
  My Solution
    PayShield AI demonstrates a smarter approach to payment protection by examining checkout behaviour and contextual signals to help distinguish legitimate retries from suspicious activity.
